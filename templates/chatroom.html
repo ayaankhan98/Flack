@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+
+{% block extend_navbar %}
+<div class="text-dark">{{ user }}</div>&nbsp;
+<button class="btn btn-outline-success btn-sm" id="leave-channel">Leave Chat</button>
+{% endblock %}
+
+
+{% block body %}
+<div class="card text-center">
+    <div class="card-header">
+     #Channel Name
+    </div>
+    <div class="card-footer text-muted fixed-bottom">
+        <div class="row">
+            <div class="col col-9">
+                <input type="text" placeholder="Type Your Message" id="message" class="form-group form-control">
+            </div>
+            <div class="col col-3">
+                <button class="btn btn-primary btn-sm form-group form-control">Send</button>    
+            </div>
+        </div>
+    </div>
+  </div>
+{% endblock %}

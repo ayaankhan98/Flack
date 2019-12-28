@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block include_scripts %}
+<script src="{{ url_for('static', filename='logout.js') }}"></script>
+<script src="{{ url_for('static', filename='channel.js') }}"></script>
+{% endblock %}
+
+
+{% block template %}
+<script id="chatroom" type="text/x-handlebars-template">
+    <br><br>
+<div class="container">
+    <div class="text-center text-primary">
+        <h5>Here's your Chatroom</h5>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <b><h5 id="chat-name">{% raw -%}
+                {{ channelname }}
+            {%- endraw %}</h5></b>
+        </div>
+        <div class="card-body" style="height: max-content; margin: 70px; padding: 10px;">
+            {% raw -%}
+            {{#each messages}}
+            <li>{{ this }}</li>
+            {{/each}}
+            
+            {{ savedmessage }}
+            {%- endraw %}
+        </div>
+        
+        <div class="card-footer">
+            <div class="row">
+                <div class="col col-9">
+                    <input type="text" placeholder="Type Your Message" id="typed-msg" class="form-group form-control">
+                </div>
+                <div class="col col-3">
+                    <button class="btn btn-primary btn-sm form-group form-control" id="sendbtn">Send</button>    
+                </div>
+            </div>
+        </div>
+      </div>
+</div>
+</script>
+{% endblock %}
+
+
+
+{% block extend_navbar %}
+<div class="text-dark">{{ user }}</div>&nbsp;
+<button class="btn btn-outline-success btn-sm" id="logout">Logout</button>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <br><br>
+    <div class="row">
+        <div class="col-sm text-center">
+            <h5 class="text-center text-primary form-group" >Type Your Channel Name</h5>
+            <div class="mx-auto col-7">
+                <input type="text" id="channel-name" class="form-group form-control" placeholder="Channel Name">
+                <p id="errormsg" style="font-size: 12px;"></p>
+                <button class="btn btn-outline-primary form-group" id="add-channel-button">+ Add</button>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm text-center">
+            <h4 class="text-dark">Available Channels</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm" style="margin-left: 30%">
+            <div id="current-channels" class="text-primary">                
+            {% if channels %}
+                {% for channel in channels %}
+                <a><li id="{{ channel }}" class="current-channels" data-channelname="{{ channel }}">{{ channel }}</li></a>
+                {% endfor %}
+            {% else %}
+               <div id="flaskmsg" class="text-center" style="margin-left: -44%;">No Available Channel, Create One Now</div> 
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="flaskmsg"></div>
+<div id="chatbox"></div>
+<br>
+{% endblock %}

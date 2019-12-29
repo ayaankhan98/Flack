@@ -13,14 +13,27 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 Session(app)
 socketio = SocketIO(app)
 
+## List to keep track of current users on the server
+users = []   
 
-users = []
+## List to keep track of currently available channels on the server
 channels = []
+
+## Dictonary to keep track of messages with their associated channels
 messages = {}
+
+## just to track the login status
 status = {'key':True}
 
+
+## Home route
 @app.route("/")
 def index():
+
+## checking if the user is already logged in or not 
+## if user already logged in then redirect user to chatroom
+## else show the signup form
+
     if session.get("user"):
         if session.get("user") in users:
             return redirect(url_for('chatrooms'))
@@ -34,6 +47,10 @@ def index():
 
     return render_template("index.html")
 
+## once the user filled the signup form the form authentication takes place at this route
+## if the username already exist then user is prompted to choose another
+## else the username gets registered and the user will be added to seesion 
+## to keep track of users activities
 
 @app.route("/login", methods = ["POST"])
 def login():
@@ -47,6 +64,11 @@ def login():
     status['key'] = False
     return redirect(url_for('index'))
 
+
+## when the user presses the logout button then this route is triggerd
+## and the user is removed from the session and again redirected to the
+## signup page
+
 @app.route("/logout",methods=["GET"])
 def logout():
     try:
@@ -55,6 +77,9 @@ def logout():
         return redirect(url_for('index'))
     session.clear()
     return redirect(url_for('index'))
+
+
+## once the user signed up then this chatroom page is triggered
 
 @app.route("/chatrooms")
 def chatrooms():
@@ -66,6 +91,11 @@ def chatrooms():
             session.clear()
     return redirect(url_for('index'))
 
+
+## when someone created a channel on the chatrooms page then this socked is triggered
+## the created channel is added to the server channel variable and
+## the newly created channel is announced to every member of the server
+
 @socketio.on("channel created")
 def channel(data):
     channelname = data["channelname"]
@@ -75,6 +105,11 @@ def channel(data):
         channels.append(channelname)
         messages[channelname] = ["#start"]
         emit("announce" , {'status':True,'channelname':channelname}, broadcast=True)
+
+
+## once the user chooses a channel and sends any message then this route is trigered
+## the newly send message is saved to the server message list with the associated channel name
+## and finnaly the newly message is announced to all the members of that channel
 
 @socketio.on("new message")
 def chat(data):
@@ -88,6 +123,11 @@ def chat(data):
     else:
         messages[channelname].append(f"{instant} / {user} ==> {typed_msg}")
     emit("message saved",{'savedmessage':f"{instant} / {user} ==> {typed_msg}",'channelname':channelname}, broadcast=True)
+
+
+
+## when the user chooses a channel then a chatroom box is created
+## the chatroom box is created by this route
 
 
 @app.route('/chatroom', methods = ["POST"])

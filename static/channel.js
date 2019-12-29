@@ -1,6 +1,7 @@
 // when the Document Object Model is done loading the run the following function
 document.addEventListener('DOMContentLoaded', () => {
 
+      
     // just to keep the chatbox on the screen always
     if (window.innerHeight < document.body.offsetHeight) {
         window.scrollTo(0,document.body.scrollHeight);
@@ -14,11 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#add-channel-button').onclick = () => {
 
         // getting the channel name fromt the form
-        const channelname = document.querySelector('#channel-name').value          
-        
-        // emmiting the event of creation of channel to the server so that all of 
-        // the curretly active users knows that a new channel is created
-        socket.emit('channel created', {'channelname':channelname})
+        const channelname = document.querySelector('#channel-name').value       
+        if (channelname.length > 0)
+        {
+            // emmiting the event of creation of channel to the server so that all of 
+            // the curretly active users knows that a new channel is created
+            socket.emit('channel created', {'channelname':channelname})
+        }  
+        else
+        {
+            alert('Please Type Channel Name')
+        } 
     }
 
 

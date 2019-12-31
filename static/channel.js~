@@ -1,11 +1,3 @@
-// This Channels.js file deals with the functioning of channels
-// such as the creation of new channels using socketio ,
-// or what happens when someone chooses a channel ?,
-// the drawing of the chatbox on the webpage,
-// the loading of old messages or saving the new messages
-// this all is defined in this file.
-
-
 // when the Document Object Model is done loading the run the following function
 document.addEventListener('DOMContentLoaded', () => {
 

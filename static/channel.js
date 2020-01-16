@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('#flaskmsg').innerHTML = ""
             document.querySelector('#errormsg').className = 'text-primary form-group'
             document.querySelector('#errormsg').innerHTML = `channel ${data.channelname} Successfully Created!`
-            const url = `<a><li id="${data.channelname}" class="current-channels" data-channelname="${data.channelname}">${data.channelname}</li></a>`
+            const url = `<a href="#" style="text-decoration:none;"><li id="${data.channelname}" class="current-channels" data-channelname="${data.channelname}">${data.channelname}</li></a>`
             document.querySelector('#current-channels').innerHTML += url
         }
         // if data.status is false that means the channel creation is unsuccessfull

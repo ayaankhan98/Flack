@@ -76,7 +76,7 @@
             <div id="current-channels" class="text-primary">                
             {% if channels %}
                 {% for channel in channels %}
-                <a><li id="{{ channel }}" class="current-channels" data-channelname="{{ channel }}">{{ channel }}</li></a>
+                <a href="#" style="text-decoration: none;"><li id="{{ channel }}" class="current-channels" data-channelname="{{ channel }}">{{ channel }}</li></a>
                 {% endfor %}
             {% else %}
                <div id="flaskmsg" class="text-center" style="margin-left: -44%;">No Available Channel, Create One Now</div> 

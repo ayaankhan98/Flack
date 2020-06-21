@@ -14,7 +14,7 @@ download the repository using
 git clone https://github.com/ayaankhan98/Flack.git
 ```
 
-Copy the repository in the Python Virtual Environment
+Activate your Python Virtual Environment
 
 ```bash
 cd Flack
